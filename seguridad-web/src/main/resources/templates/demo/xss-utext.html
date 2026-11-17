@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DEMO XSS (th:utext)</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+    <div class="card warning">
+        <strong>PRUEBA TEMPORAL - INSEGURO.</strong>
+        Esta página usa <code>th:utext</code> (sin escapar) solo para demostrar XSS.
+        Solo existe con <code>app.demo.vulnerable=true</code>.
+    </div>
+    <div class="card">
+        <h2>Comentarios renderizados con th:utext</h2>
+        <div class="comentario" th:each="c : ${comentarios}">
+            <strong th:text="${c.autor}">autor</strong>
+            <!-- INSEGURO a proposito: el HTML/JS del comentario se interpreta -->
+            <p th:utext="${c.texto}">texto</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

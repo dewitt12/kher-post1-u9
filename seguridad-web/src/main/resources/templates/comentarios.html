@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comentarios</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+    <div class="card">
+        <h1>Comentarios</h1>
+        <form th:action="@{/comentarios}" method="post">
+            <label for="texto">Nuevo comentario</label>
+            <textarea id="texto" name="texto" rows="3" maxlength="500" required></textarea>
+            <button type="submit">Publicar</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Publicados</h2>
+        <div class="comentario" th:each="c : ${comentarios}">
+            <!-- SEGURO: th:text escapa < y > (&lt;script&gt;), el navegador lo muestra como texto -->
+            <strong th:text="${c.autor}">autor</strong>
+            <p th:text="${c.texto}">texto</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

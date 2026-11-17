@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header th:fragment="header">
+    <strong>Seguridad Web U9</strong>
+    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/comentarios}">Comentarios</a>
+    <a th:href="@{/admin/panel}" sec:authorize="hasRole('ADMIN')">Panel admin</a>
+    <span class="spacer"></span>
+    <span sec:authorize="isAuthenticated()" th:text="${#authentication.name}">usuario</span>
+    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+        <button type="submit" class="link">Salir</button>
+    </form>
+</header>
+</body>
+</html>
