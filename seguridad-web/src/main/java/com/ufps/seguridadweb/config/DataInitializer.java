@@ -8,8 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ufps.seguridadweb.model.Comentario;
 import com.ufps.seguridadweb.model.Rol;
+import com.ufps.seguridadweb.model.Tarea;
 import com.ufps.seguridadweb.model.Usuario;
 import com.ufps.seguridadweb.repository.ComentarioRepository;
+import com.ufps.seguridadweb.repository.TareaRepository;
 import com.ufps.seguridadweb.repository.UsuarioRepository;
 
 @Configuration
@@ -18,6 +20,7 @@ public class DataInitializer {
     @Bean
     CommandLineRunner cargarDatos(UsuarioRepository usuarios,
                                   ComentarioRepository comentarios,
+                                  TareaRepository tareas,
                                   PasswordEncoder encoder,
                                   @Value("${app.seed.admin-password}") String adminPassword,
                                   @Value("${app.seed.user-password}") String userPassword) {
@@ -26,6 +29,10 @@ public class DataInitializer {
             usuarios.save(new Usuario("admin", encoder.encode(adminPassword), Rol.ADMIN));
             usuarios.save(new Usuario("juan", encoder.encode(userPassword), Rol.USER));
             comentarios.save(new Comentario("admin", "Bienvenidos al laboratorio de seguridad web."));
+
+            tareas.save(new Tarea("Revisar configuracion de SecurityFilterChain", "juan"));
+            tareas.save(new Tarea("Probar login JWT con curl", "juan"));
+            tareas.save(new Tarea("Auditar usuarios del sistema", "admin"));
         };
     }
 }
